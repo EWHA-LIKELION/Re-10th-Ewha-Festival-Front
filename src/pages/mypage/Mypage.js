@@ -1,27 +1,28 @@
-import MyManager from "../../components/Mypage/MyManager";
-import MyUser from "../../components/Mypage/MyUser";
-import React, { useState, useEffect } from "react";
+import MyManager from "./MyManager";
+import MyUser from "./MyUser";
+import React, { useState } from "react";
 
-import { http } from "../../api/http";
+import { useAppSelector } from "../../redux/store";
 
+import { useNavigate } from "react-router-dom";
 const Mypage = () => {
-  const [isBooth, setBooths] = useState();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    http
-      .get("/accounts/")
-      .then(res => {
-        console.log("[로그인 유저]\n", res.data.data);
-        setBooths(res.data.data.is_booth);
-      })
-      .catch(err => console.log(err));
-  }, []);
+  const [isBooth2, setBooths2] = useState();
 
-  if (isBooth == true) {
+  const { username, id, nickname, isBooth, isTf, boothId } = useAppSelector(
+    state => state.user,
+  );
+
+  console.log("테스트", username, id, nickname, isBooth, isTf, boothId);
+
+  if (isBooth2 == true) {
     console.log("부스관리자");
+    navigate("/mypage/mymanager");
     return <MyManager />;
   } else {
     console.log("일반유저");
+    navigate("/mypage/myuser");
     return <MyUser />;
   }
 };
