@@ -34,6 +34,9 @@ import MakersPage from "./pages/makerspage/MakersPage";
 import SearchPage from "./pages/searchpage/SearchPage";
 // 트래킹
 import RouteChangeTracker from "./components/RouteChangeTracker";
+
+import MyManager from "./pages/mypage/MyManager";
+import MyUser from "./pages/mypage/MyUser";
 function App() {
   RouteChangeTracker();
 
@@ -46,7 +49,12 @@ function App() {
       {/* 부스 */}
       <Route exact path="/category" element={<Category />} />
       {/* 마이페이지 */}
-      <Route exact path="/mypage" element={<Mypage />} />
+      <Route exact path="/mypage*" element={<Mypage />} />
+      {/* 마이페이지  부스 유저*/}
+      <Route exact path="/mypage/mymanager*" element={<MyManager />} />
+      {/* 마이페이지 일반 유저 */}
+      <Route exact path="/mypage/myuser*" element={<MyUser />} />
+
       {/* 디테일 */}
       <Route exact path="/category/detail/:id" element={<BoothDetailPage />} />
       {/* 수정 */}
