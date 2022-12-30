@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled, {
-  createGlobalStyle,
-  isStyledComponent,
-} from "styled-components";
-import axios from "axios";
+import styled from "styled-components";
 //images
 import title from "../../images/main/title.svg";
 import { FiUser } from "react-icons/fi";
@@ -17,14 +13,10 @@ import { AiFillInfoCircle } from "react-icons/ai";
 import RegisterModal from "../../components/Register/RegisterModal";
 // 유저 정보 관련
 import { useAppDispatch } from "../../redux/store";
-import { GetUser, PostUser, GetProfile } from "../../api/user";
-import { setUser } from "../../redux/userSlice";
 
 const RegisterPage = () => {
   // 유저 리덕스
   const dispatch = useAppDispatch();
-
-  const navigate = useNavigate();
 
   // 입력 관리
   const [id, setId] = useState("");
@@ -42,36 +34,8 @@ const RegisterPage = () => {
   // 회원가입 함수
   const Register = e => {
     e.preventDefault();
-    // 회원가입에 필요한 정보 전부 입력시 post
-    if (CheckInputs() === 1) {
-      e.preventDefault();
-      // 회원가입
-      PostUser(id, password, name)
-        .then(data => {
-          alert(data.message);
-          // 로그인
-          GetUser(id, password).then(data => {
-            const token = data.data.access_token;
-            window.localStorage.setItem("token", JSON.stringify(token)); // 로컬에 유저 토큰 저장
-            // 유저 프로필 가져오기
-            GetProfile(token)
-              .then(res => {
-                dispatch(setUser(res.data));
-                console.log(res.data);
-                window.location.reload();
-                window.location.href = "https://rewha2022.com/";
-              })
-              .catch(error => console.log(error));
-          });
-        })
-        .catch(error => {
-          const message = error.response.data.data.username;
-          message && alert(message);
-        });
-    } else {
-      if (CheckInputs() === 2) alert("정확한 비밀단어를 입력해주세요.");
-      else alert("회원가입에 필요한 모든 정보를 입력해주세요.");
-    }
+
+    alert("해당 사이트는 회원가입이 불가능 합니다.");
   };
 
   // 동일한 비밀번호 입력시 색 변경 함수
@@ -81,20 +45,6 @@ const RegisterPage = () => {
       : setCheckColor("#EAEAEA");
   };
 
-  // 회원가입에 필요한 정보 입력, 비밀단어 일치 여부에 따라 다른 숫자값을 반환하는 함수
-  const CheckInputs = () => {
-    if (
-      id !== " " &&
-      password !== "" &&
-      name !== "" &&
-      secreteWord === "솹긱옴뉴"
-    )
-      return 1;
-    else {
-      if (secreteWord !== "솹긱옴뉴") return 2;
-      else return 3;
-    }
-  };
   return (
     <>
       {modal ? <RegisterModal setModal={setModal} /> : null}
