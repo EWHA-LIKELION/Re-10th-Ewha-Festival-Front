@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 // components
 import CardSlider from "../../components/MainPage/CardSlider";
@@ -12,7 +12,6 @@ import SideBar from "../../components/SideBar";
 import Map from "../../components/MainPage/Map";
 import {
   PyeongChang_Peace,
-  PyeongChang,
   NanumSquare,
   Pretendard,
 } from "../../components/Text";
