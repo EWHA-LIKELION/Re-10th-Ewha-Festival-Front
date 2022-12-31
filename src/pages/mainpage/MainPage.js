@@ -27,11 +27,52 @@ import toplogo from "../../images/main/toplogo.svg";
 import person from "../../images/main/person.svg";
 import hamburger from "../../images/main/hamburger.svg";
 
+import { useAppSelector } from "../../redux/store";
+
 const MainPage = () => {
   const isLogin = localStorage.getItem("token");
 
+  const { username, id, nickname, isBooth, isTf, boothId } = useAppSelector(
+    state => state.user,
+  );
+
+  const isBoothUser = isBooth;
+  const isTfUser = isTf;
+
   // 사이드바 관리
   const [sideBar, setSideBar] = useState(false);
+
+  console.log("테스트", username, id, nickname, isBooth, isTf, boothId);
+
+  let Mypage = null;
+
+  if (isLogin) {
+    if (isTfUser) {
+      Mypage = (
+        <Link to="/mypage/myuser">
+          <img src={person} style={{ paddingTop: "3px" }} />
+        </Link>
+      );
+    } else if (isBoothUser) {
+      Mypage = (
+        <Link to="/mypage/mymanager">
+          <img src={person} style={{ paddingTop: "3px" }} />
+        </Link>
+      );
+    } else {
+      Mypage = (
+        <Link to="/mypage/myuser">
+          <img src={person} style={{ paddingTop: "3px" }} />
+        </Link>
+      );
+    }
+  } else {
+    Mypage = (
+      <Link to="/login">
+        <img src={person} style={{ paddingTop: "3px" }} />
+      </Link>
+    );
+  }
 
   useEffect(() => {
     const preventGoBack = () => {
@@ -65,7 +106,8 @@ const MainPage = () => {
             <TopLogo src={toplogo} />
           </object>
 
-          {isLogin ? (
+          {Mypage}
+          {/* {isLogin&&isBooth (
             <Link to="/mypage">
               <img src={person} style={{ paddingTop: "3px" }} />
             </Link>
@@ -73,7 +115,7 @@ const MainPage = () => {
             <Link to="/login">
               <img src={person} style={{ paddingTop: "3px" }} />
             </Link>
-          )}
+          )} */}
         </TopBar>
         {sideBar ? <SideBar setSideBar={setSideBar} /> : null}
         <Wrapper>

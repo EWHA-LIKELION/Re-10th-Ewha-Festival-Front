@@ -8,8 +8,7 @@ import Category from "./pages/boothpage/Category";
 // 공지
 import Create from "./pages/noticepage/Create";
 import Update from "./pages/noticepage/Update";
-// 마이페이지
-import Mypage from "./pages/mypage/Mypage";
+
 //테스트
 import ReduxTest from "./pages/reduxTest";
 //회원가입 페이지
@@ -48,8 +47,7 @@ function App() {
       <Route exact path="/search" element={<SearchPage />} />
       {/* 부스 */}
       <Route exact path="/category" element={<Category />} />
-      {/* 마이페이지 */}
-      <Route exact path="/mypage*" element={<Mypage />} />
+
       {/* 마이페이지  부스 유저*/}
       <Route exact path="/mypage/mymanager*" element={<MyManager />} />
       {/* 마이페이지 일반 유저 */}

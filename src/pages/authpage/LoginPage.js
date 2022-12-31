@@ -75,7 +75,7 @@ const LoginPage = () => {
     }
 
     dispatch(initPage());
-    //navigate("/");
+    navigate("/");
   };
 
   return (
