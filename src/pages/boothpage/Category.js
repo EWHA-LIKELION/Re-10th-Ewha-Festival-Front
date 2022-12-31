@@ -38,7 +38,9 @@ const Category = () => {
   const [pickedMap, setPickedMap] = useState(location); // 선택된 지도
 
   const [booths, setBooths] = useState(categoryData.data); // 부스 목록
-  const [length, setLength] = useState(0);
+  const [selectedBooths, setSelectedBooths] = useState([]);
+
+  const [length, setLength] = useState(booths.length);
 
   var selectLocationId = null;
   locations.map(lo => {
@@ -55,26 +57,6 @@ const Category = () => {
 
     selectLocation(selectLocationId); // 전에 눌렀던 장소 버튼
     selectDay(parseInt(day)); // 전에 눌렀던 요일 버튼
-
-    GetKeywordBooth(pickedDay, pickedLocation, pickedPage)
-      .then(res => {
-        console.log("조회 결과", res);
-        setBooths(res.data.data);
-        setLength(res.data.total);
-      })
-      .catch(err => {
-        console.log(
-          "부스 조회 실패 =>",
-          pickedDay,
-          pickedLocation,
-          pickedPage,
-          err,
-        );
-
-        if (err.response.data.detail === "페이지가 유효하지 않습니다.") {
-          setpickedPage(1);
-        }
-      });
   }, []);
 
   //날짜 또는 장소 선택 바뀌면 get api 실행
@@ -83,18 +65,9 @@ const Category = () => {
       setPage({ day: pickedDay, location: pickedLocation, page: pickedPage }),
     );
 
-    GetKeywordBooth(pickedDay, pickedLocation, pickedPage)
-      .then(res => {
-        setBooths(res.data.data);
-        setLength(res.data.total);
-      })
-      .catch(err => {
-        console.log("부스 조회 실패", err, pickedDay, pickedLocation);
+    setSelectedBooths(booths.filter(b => b.college == pickedLocation));
 
-        if (err.response.data.detail === "페이지가 유효하지 않습니다.") {
-          setpickedPage(1);
-        }
-      });
+    console.log(selectedBooths);
   }, [pickedDay, pickedLocation, pickedPage]);
 
   /**요일 선택 : 요일 버튼 ui 변경 + 선택된 요일 변경*/
@@ -263,43 +236,47 @@ const Category = () => {
             var info = description;
           }
 
-          return (
-            <Booth key={b.id}>
-              {b.thumnail == "" ? (
-                <BoothImg src={booththumnail} onClick={() => Detail(b.id)} />
-              ) : (
-                <BoothImg src={b.thumnail} onClick={() => Detail(b.id)} />
-              )}
-              <BootInfo onClick={event => Detail(b.id)}>
-                <p className="num">{b.number}</p>
-                <p className="name">{b.name.substr(0, 13)}</p>
-                <p className="info">{info}</p>
-              </BootInfo>
-              {b.is_liked ? (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <Heart src={greenheart} onClick={() => unLike(b.id)} />
-                  <HeartBox onClick={event => Detail(b.id)}></HeartBox>
-                </div>
-              ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <Heart src={heart} onClick={() => Like(b.id)} />
-                  <HeartBox onClick={event => Detail(b.id)}></HeartBox>
-                </div>
-              )}
-            </Booth>
-          );
+          if (b.college == pickedLocation) {
+            return (
+              <Booth key={b.id}>
+                {b.thumnail == "" ? (
+                  <BoothImg src={booththumnail} onClick={() => Detail(b.id)} />
+                ) : (
+                  <BoothImg src={b.thumnail} onClick={() => Detail(b.id)} />
+                )}
+                <BootInfo onClick={event => Detail(b.id)}>
+                  <p className="num">{b.number}</p>
+                  <p className="name">{b.name.substr(0, 13)}</p>
+                  <p className="info">{info}</p>
+                </BootInfo>
+                {b.is_liked ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Heart src={greenheart} onClick={() => unLike(b.id)} />
+                    <HeartBox onClick={event => Detail(b.id)}></HeartBox>
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Heart src={heart} onClick={() => Like(b.id)} />
+                    <HeartBox onClick={event => Detail(b.id)}></HeartBox>
+                  </div>
+                )}
+              </Booth>
+            );
+          } else {
+            return <></>;
+          }
         })}
       </BoothBox>
 
