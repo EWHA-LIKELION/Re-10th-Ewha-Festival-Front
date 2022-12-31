@@ -50,6 +50,10 @@ const SideBar = props => {
         <LinkWrapper>
           <p>
             <img src={linkDeco} />
+            {<Link to="/">메인 페이지</Link>}
+          </p>
+          <p>
+            <img src={linkDeco} />
             {<Link to="/notice">공지사항</Link>}
           </p>
           <p style={{ marginRight: "32px" }}>
