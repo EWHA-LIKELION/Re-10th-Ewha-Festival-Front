@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { PyeongChang_Peace, Pretendard } from "../../components/Text";
 import Footer from "../../components/Footer/Footer";
-import { boothData } from "../../_mock/boothData";
+import { categoryData } from "../../_mock/categoryData";
 import { http } from "../../api/http";
 import Mstar from "../../images/mypage/Mstar.svg";
 
@@ -19,7 +19,7 @@ import booththumnail from "../../images/default.png";
 import { useAppSelector } from "../../redux/store";
 
 const UserMy = () => {
-  const [booths, setBooths] = useState(boothData); //좋아요한 부스
+  const [booths, setBooths] = useState(categoryData); //좋아요한 부스
   const [likebooths, setLikebooths] = useState(0); // 좋아요 부스 개수
   const [nickname1, setnickname] = useState();
   const [username1, setusername] = useState();

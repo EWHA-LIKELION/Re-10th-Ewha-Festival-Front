@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 
 import { PyeongChang_Peace, Pretendard } from "../../components/Text";
 import Footer from "../../components/Footer/Footer";
-import { boothData } from "../../_mock/boothData";
+import { categoryData } from "../../_mock/categoryData";
 import { useNavigate } from "react-router-dom";
 
 import { http } from "../../api/http";
@@ -22,7 +22,7 @@ import booththumnail from "../../images/default.png";
 import { GetLikes } from "../../api/user";
 
 const MyManager = () => {
-  const [booths, setBooths] = useState(boothData);
+  const [booths, setBooths] = useState(categoryData);
   const [likebooths, setLikebooths] = useState(0);
   const [nickname, setnickname] = useState();
   const [username, setusername] = useState();
