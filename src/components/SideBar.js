@@ -39,16 +39,12 @@ const SideBar = props => {
         />
         <DeleteBtn src={deleteIcon} onClick={DeleteSideBar} />
 
-        <object
-          type="image/svg+xml"
-          data={toplogo}
-          style={{ marginTop: "99px" }}
-        >
+        <Link to="/" style={{ marginTop: "99px" }}>
           <TopLogo src={toplogo} />
-        </object>
+        </Link>
 
         <LinkWrapper>
-          <p>
+          <p style={{ marginRight: "20px" }}>
             <img src={linkDeco} />
             {<Link to="/">메인 페이지</Link>}
           </p>
