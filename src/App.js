@@ -9,8 +9,6 @@ import Category from "./pages/boothpage/Category";
 import Create from "./pages/noticepage/Create";
 import Update from "./pages/noticepage/Update";
 
-//테스트
-import ReduxTest from "./pages/reduxTest";
 //회원가입 페이지
 import RegisterPage from "./pages/authpage/RegisterPage";
 // 디테일
