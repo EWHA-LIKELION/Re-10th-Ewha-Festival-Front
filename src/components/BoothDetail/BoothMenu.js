@@ -1,22 +1,12 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { GetBooth } from "../../api/booth";
-
+import { useState } from "react";
 import { Pretendard } from "../Text";
 import PartTitle from "./PartTitle";
 
 const BoothMenu = () => {
-  let { id } = useParams();
-  const [thisMenus, setThisMenus] = useState([]);
-
-  useEffect(() => {
-    GetBooth(id)
-      .then(res => {
-        setThisMenus(res.data.data.menus);
-      })
-      .catch();
-  }, []);
+  const [thisMenus, setThisMenus] = useState([
+    { is_soldout: false, menu: "와", price: 1000 },
+  ]);
 
   return (
     <>
