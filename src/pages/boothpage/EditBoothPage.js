@@ -10,7 +10,6 @@ import Footer from "../../components/Footer/Footer";
 import EditTitleBar from "../../components/EditMenu/EditTitleBar";
 
 // import api component
-import { GetBooth, PatchBooth } from "../../api/booth";
 import { useAppSelector } from "../../redux/store";
 
 const EditBoothPage = () => {
@@ -24,25 +23,11 @@ const EditBoothPage = () => {
     getPrev(boothId);
   }, [boothId]);
 
-  const getPrev = id => {
-    GetBooth(id).then(response => {
-      setName(response.data.data.name);
-      setNotice(response.data.data.notice);
-      setDescription(response.data.data.description);
-      console.log("[prevdata 조회 성공] : ", response.data);
-    });
-  };
+  const getPrev = id => {};
 
   // 부스 정보 수정하기
   const onSubmit = () => {
     if (name !== "") {
-      PatchBooth(boothId, name, notice, description)
-        .then(response => console.log(response))
-        .catch(error => {
-          console.log(error);
-        });
-
-      navigate(-1);
     } else {
       alert("부스 이름은 필수 정보입니다");
     }
