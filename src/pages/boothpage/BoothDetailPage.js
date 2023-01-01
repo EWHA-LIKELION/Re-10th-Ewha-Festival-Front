@@ -9,22 +9,26 @@ import BoothInfo from "../../components/BoothDetail/BoothInfo";
 import BoothMenu from "../../components/BoothDetail/BoothMenu";
 import BoothComments from "../../components/BoothDetail/BoothComments";
 import ImgModal from "../../components/BoothDetail/ImgModal";
-import { GetBooth, LikeBooth, UnLikeBooth } from "../../api/booth";
 
 import greenheart from "../../images/greenheart.svg";
 import heart from "../../images/heart.svg";
-import booththumnail from "../../images/detail/booththumnail.png";
+
+import { categoryData } from "../../_mock/categoryData";
+
+import img1 from "../../images/_mock/img1.png";
+import img2 from "../../images/_mock/img2.png";
+import img3 from "../../images/_mock/img3.jpg";
+import img4 from "../../images/_mock/img4.jpg";
+import img5 from "../../images/_mock/img5.jpg";
+import img6 from "../../images/_mock/img6.jpg";
+
+import booththumnail from "../../images/_mock/img6.jpg";
 
 const BoothDetailPage = () => {
   let { id } = useParams();
-  const [booth, setBooth] = useState({});
+  const [booth, setBooth] = useState(categoryData.data[id - 1]);
 
   useEffect(() => {
-    GetBooth(id)
-      .then(res => {
-        setBooth(res.data.data);
-      })
-      .catch();
     setImgModal(false);
     setNotice(false);
     setInfo(false);
@@ -34,18 +38,13 @@ const BoothDetailPage = () => {
     const token = localStorage.getItem("token");
     if (token) {
       setBooth({ ...booth, is_liked: true });
-      LikeBooth(id)
-        .then()
-        .catch(err => alert("부스 좋아요 실패", err.data));
     } else {
       alert("로그인이 필요합니다.");
     }
   };
   const unLike = id => {
+    console.log("취소");
     setBooth({ ...booth, is_liked: false });
-    UnLikeBooth(id)
-      .then()
-      .catch(err => alert("부스 좋아요 취소 실패", err.data));
   };
 
   const [imgModal, setImgModal] = useState(false);
@@ -65,7 +64,8 @@ const BoothDetailPage = () => {
   };
   const [infoString, setInfoString] = useState("");
 
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState([img1, img2, img3, img4, img5, img6]);
+
   const [src, setSrc] = useState("");
   const openModal = src => {
     setSrc(src);
@@ -75,20 +75,13 @@ const BoothDetailPage = () => {
   useEffect(() => {
     setNoticeString(booth.notice);
     setInfoString(booth.description);
-    setImages(booth.images);
   }, [booth]);
 
   return (
     <>
       <Wrapper>
-        <MainImage
-          onClick={() =>
-            openModal(booth.thumnail === "" ? booththumnail : booth.thumnail)
-          }
-        >
-          <MainImg
-            src={booth.thumnail === "" ? booththumnail : booth.thumnail}
-          />
+        <MainImage onClick={() => openModal(booththumnail)}>
+          <MainImg src={booththumnail} />
         </MainImage>
         <WhiteWrapper>
           <TitleWrapper>
@@ -127,8 +120,8 @@ const BoothDetailPage = () => {
                   {images.map(img => {
                     return (
                       <>
-                        <ImgRect onClick={() => openModal(img.image)}>
-                          <Img src={img.image} />
+                        <ImgRect onClick={() => openModal(img)}>
+                          <Img src={img} />
                         </ImgRect>
                       </>
                     );
