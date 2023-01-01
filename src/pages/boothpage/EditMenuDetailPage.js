@@ -13,10 +13,6 @@ import fullsoldout from "../../images/edit/fullsoldout.svg";
 import Footer from "../../components/Footer/Footer";
 import TitleBar from "../../components/TitleBar";
 
-// import api component
-import { GetMenu, PatchMenu } from "../../api/booth";
-import { useAppSelector } from "../../redux/store";
-
 const EditMenuDetailPage = () => {
   // navigate
   const navigate = useNavigate();
@@ -28,10 +24,9 @@ const EditMenuDetailPage = () => {
   const [isSoldout, setIsSoldout] = useState(false);
   const [menuName, setMenuName] = useState("");
   const [menuPrice, setMenuPrice] = useState("");
-  const [menu, setMenu] = useState([]);
-
-  // boothId 불러오기
-  const boothId = useAppSelector(state => state.user.boothId);
+  const [menu, setMenu] = useState([
+    { menu: "메뉴1", price: 1000, is_soldout: false },
+  ]);
 
   // 기존 메뉴 조회하기
   useEffect(() => {
@@ -47,16 +42,6 @@ const EditMenuDetailPage = () => {
     }
   };
 
-  // booth id, menu id에 따라 menu 불러오기
-  useEffect(() => {
-    if (boothId !== null) {
-      GetMenu(boothId).then(response => {
-        console.log(response.data.data.filter(isMenu)[0]);
-        setMenu(response.data.data.filter(isMenu)[0]);
-      });
-    }
-  }, [boothId]);
-
   // 필터링을 위한 boolean 함수
   const isMenu = element => {
     if (element.id == id) {
@@ -69,13 +54,7 @@ const EditMenuDetailPage = () => {
       if (menuPrice >= 100000000) {
         alert("가격은 1억 이하로만 설정할 수 있습니다.");
       } else {
-        PatchMenu(boothId, id, menuName, menuPrice, isSoldout)
-          .then(response => console.log("[메뉴 정보 수정 성공]", response.data))
-          .catch(error => {
-            console.log(error);
-          });
-
-        navigate(-1);
+        alert("[메뉴 정보 수정 성공]");
       }
     } else {
       alert("메뉴 이름과 가격을 모두 입력해주세요");

@@ -8,10 +8,6 @@ import { Pretendard } from "../Text";
 import emptycheck from "../../images/edit/emptycheck.svg";
 import fullcheck from "../../images/edit/fullcheck.svg";
 
-// import api component
-import { GetMenu } from "../../api/booth";
-import { http } from "../../api/http";
-
 // Menudata component
 const MenuData = ({ handleCheck, props, checked }) => {
   let price = props.price;
@@ -23,7 +19,6 @@ const MenuData = ({ handleCheck, props, checked }) => {
           key={props.id}
           id={props.id}
           className={props.is_soldout ? "soldout" : "selling"}
-          
         >
           <Pretendard weight="500" size="14px">
             <MenuName key={props.id} id={props.id}>
@@ -31,7 +26,7 @@ const MenuData = ({ handleCheck, props, checked }) => {
             </MenuName>
           </Pretendard>
           <Pretendard weight="300" size="13px">
-            <MenuPrice key={props.id} id={props.id} >
+            <MenuPrice key={props.id} id={props.id}>
               {commaPrice}원
             </MenuPrice>
           </Pretendard>
@@ -49,7 +44,11 @@ const MenuData = ({ handleCheck, props, checked }) => {
 const MenuItem = props => {
   // useState
   const [checked, setChecked] = useState(null);
-  const [menus, setMenus] = useState([]);
+  const [menus, setMenus] = useState([
+    { id: 1, price: 100, menu: "메뉴 이름" },
+    { id: 2, price: 100, menu: "메뉴 이름" },
+    { id: 3, price: 100, menu: "메뉴 이름" },
+  ]);
   const [id, setId] = useState(null);
 
   // checked menu id parent에 보내기
@@ -57,25 +56,6 @@ const MenuItem = props => {
     setChecked(e.target.id);
     props.setItem(e.target.id);
   };
-
-  // user account 불러오기
-  useEffect(() => {
-    http
-      .get("/accounts/")
-      .then(response => {
-        setId(response.data.data.booth_id);
-      })
-      .catch(error => console.log(error));
-  }, []);
-
-  // booth id에 따라 메뉴 불러오기
-  useEffect(() => {
-    if (id !== null) {
-      GetMenu(id).then(response => {
-        setMenus(response.data.data);
-      });
-    }
-  }, [id]);
 
   return (
     <>
