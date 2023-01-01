@@ -1,22 +1,19 @@
 import styled from "styled-components";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-
-import { GetBooth } from "../../api/booth";
-import { SubmitComment } from "../../api/booth";
-import { http } from "../../api/http";
-import { DeleteCommentA } from "../../api/booth";
-
 import { Pretendard } from "../Text";
 import PartTitle from "./PartTitle";
 import Modal from "../Modal/Modal";
 import commentdelete from "../../images/detail/commentdelete.svg";
 import commentwrite from "../../images/detail/commentwrite.svg";
+import { categoryData } from "../../_mock/categoryData";
 
 const BoothComments = () => {
   let { id } = useParams();
   const [isLogin, setIsLogin] = useState(false);
+
   const token = localStorage.getItem("token");
+
   useEffect(() => {
     if (token === null) {
       setIsLogin(false);
@@ -25,6 +22,7 @@ const BoothComments = () => {
       setIsLogin(true);
     }
   }, []);
+
   useEffect(() => {
     if (isLogin === true) {
       document.getElementById("input").disabled = false;
@@ -34,27 +32,39 @@ const BoothComments = () => {
     }
   });
 
-  const [thisUser, setThisUser] = useState({});
-  const [thisBoothUserId, setThisBoothUserId] = useState();
-  const [thisComments, setThisComments] = useState([]);
-
-  const getComments = () => {
-    GetBooth(id)
-      .then(res => {
-        setThisBoothUserId(res.data.data.user);
-        setThisComments(res.data.data.comments);
-      })
-      .catch();
-  };
+  const [thisUser, setThisUser] = useState({ id: 1 });
+  const [thisBoothUserId, setThisBoothUserId] = useState(
+    categoryData.data[id - 1].user,
+  );
+  const [thisComments, setThisComments] = useState([
+    {
+      created_at: "22.09.16 12:32",
+      content: "선착순으로 배부합니다:) 댓글 달아주세요!",
+      user: { nickname: "부스 관리자", id: 1 },
+    },
+    {
+      created_at: "22.09.16 12:32",
+      content: "저요!!",
+      user: { nickname: "이화연", id: 2 },
+    },
+    {
+      created_at: "22.09.16 12:32",
+      content: "저욧",
+      user: { nickname: "슬픔이", id: 2 },
+    },
+    {
+      created_at: "22.09.16 12:32",
+      content: "저요",
+      user: { nickname: "마루", id: 2 },
+    },
+    {
+      created_at: "22.09.16 12:32",
+      content: "혹시 00 마감됐나요?",
+      user: { nickname: "도비", id: 2 },
+    },
+  ]);
 
   useEffect(() => {
-    getComments();
-    http
-      .get("/accounts/")
-      .then(res => {
-        setThisUser(res.data.data);
-      })
-      .catch();
     setDeleteModal(false);
     setInputModal(false);
   }, []);
@@ -82,11 +92,6 @@ const BoothComments = () => {
   };
 
   const DeleteComment = cId => {
-    DeleteCommentA(id, cId)
-      .then(res => {
-        getComments();
-      })
-      .catch();
     closeDeleteModal();
   };
 
@@ -104,11 +109,6 @@ const BoothComments = () => {
     if (newComment === "") {
       setInputModal(true);
     } else {
-      SubmitComment(id, newComment)
-        .then(res => {
-          getComments();
-        })
-        .catch();
       setIsAdd(true);
       setNewComment("");
     }
