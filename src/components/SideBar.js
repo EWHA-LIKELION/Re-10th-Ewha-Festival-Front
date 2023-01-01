@@ -6,8 +6,12 @@ import toplogo from "../images/main/toplogo.svg";
 import deleteIcon from "../images/delete.svg";
 import linkDeco from "../images/linkDeco.svg";
 
+import { useAppSelector } from "../redux/store";
+
 const SideBar = props => {
   const isLogin = localStorage.getItem("token");
+  const { isBooth } = useAppSelector(state => state.user);
+
   // 사이드바 안보이게 하는 함수
   const DeleteSideBar = () => {
     props.setSideBar(false);
@@ -25,6 +29,16 @@ const SideBar = props => {
       window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     };
   }, []);
+
+  let mypagePath = "/mypage/myuser";
+
+  if (isLogin) {
+    if (isBooth) {
+      mypagePath = "/mypage/mymanager";
+    }
+  } else {
+    mypagePath = "/login";
+  }
 
   return (
     <BarWrapper onClick={DeleteSideBar}>
@@ -66,11 +80,7 @@ const SideBar = props => {
           </p>
           <p style={{ marginRight: "16px" }}>
             <img src={linkDeco} />
-            {isLogin ? (
-              <Link to="/mypage">마이페이지</Link>
-            ) : (
-              <Link to="/login">마이페이지</Link>
-            )}
+            <Link to={mypagePath}>마이페이지</Link>
           </p>
           <p>
             <img src={linkDeco} />

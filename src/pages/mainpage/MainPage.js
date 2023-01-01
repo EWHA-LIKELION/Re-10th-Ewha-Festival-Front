@@ -32,17 +32,13 @@ import { useAppSelector } from "../../redux/store";
 const MainPage = () => {
   const isLogin = localStorage.getItem("token");
 
-  const { username, id, nickname, isBooth, isTf, boothId } = useAppSelector(
-    state => state.user,
-  );
+  const { isBooth, isTf } = useAppSelector(state => state.user);
 
   const isBoothUser = isBooth;
   const isTfUser = isTf;
 
   // 사이드바 관리
   const [sideBar, setSideBar] = useState(false);
-
-  console.log("테스트", username, id, nickname, isBooth, isTf, boothId);
 
   let Mypage = null;
 
@@ -107,15 +103,6 @@ const MainPage = () => {
           </object>
 
           {Mypage}
-          {/* {isLogin&&isBooth (
-            <Link to="/mypage">
-              <img src={person} style={{ paddingTop: "3px" }} />
-            </Link>
-          ) : (
-            <Link to="/login">
-              <img src={person} style={{ paddingTop: "3px" }} />
-            </Link>
-          )} */}
         </TopBar>
         {sideBar ? <SideBar setSideBar={setSideBar} /> : null}
         <Wrapper>
