@@ -19,13 +19,15 @@ import edit1 from "../../images/mypage/edit1.png";
 import edit2 from "../../images/mypage/edit2.png";
 import booththumnail from "../../images/default.png";
 
-import { GetLikes } from "../../api/user";
+import { useAppSelector } from "../../redux/store";
 
 const MyManager = () => {
-  const [booths, setBooths] = useState(categoryData);
+  const { username, nickname } = useAppSelector(state => state.user);
+
+  const [booths, setBooths] = useState(categoryData.data);
   const [likebooths, setLikebooths] = useState(0);
-  const [nickname, setnickname] = useState();
-  const [username, setusername] = useState();
+  const [nickname1, setnickname] = useState(nickname);
+  const [username1, setusername] = useState(username);
   const navigate = useNavigate();
 
   const goEditbooth = () => {
@@ -37,39 +39,21 @@ const MyManager = () => {
   const Detail = id => {
     navigate(`/category/detail/${id}`);
   };
-  useEffect(() => {
-    http
-      .get("/accounts/")
-      .then(res => {
-        console.log("[로그인 유저]\n", res.data.data);
-        setnickname(res.data.data.nickname);
-        setusername(res.data.data.username);
-      })
-      .catch(err => console.log(err));
-  }, []);
 
-  useEffect(() => {
-    GetLikes(localStorage.getItem("token").slice(1, -1))
-      .then(res => {
-        console.log("좋아요한 부스 조회 성공", res);
-        setBooths(res.data.data);
-        setLikebooths(res.data.data.length);
-      })
-      .catch(err => {
-        console.log("좋아요한 부스 조회 실패", err);
-      });
-  }, []);
+  useEffect(() => {}, []);
+
   const wrapperRef = useRef(null);
+
   return (
     <Wrapper>
       <Navbar />
       <Userbox>
         <object className="Mstar" data={Mstar} type="image/svg+xml" />
         <p className="nickname">
-          <Pretendard>{nickname}</Pretendard>
+          <Pretendard>{nickname1}</Pretendard>
         </p>
         <p className="user">
-          <Pretendard>{username}</Pretendard>
+          <Pretendard>{username1}</Pretendard>
         </p>
         <p className="manager">
           <Pretendard>부스관리자</Pretendard>

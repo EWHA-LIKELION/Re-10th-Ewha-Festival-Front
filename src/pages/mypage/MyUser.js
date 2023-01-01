@@ -19,18 +19,13 @@ import booththumnail from "../../images/default.png";
 import { useAppSelector } from "../../redux/store";
 
 const UserMy = () => {
-  const [booths, setBooths] = useState(categoryData); //좋아요한 부스
+  const { username, nickname } = useAppSelector(state => state.user);
+
+  const [booths, setBooths] = useState(categoryData.data); //좋아요한 부스
   const [likebooths, setLikebooths] = useState(0); // 좋아요 부스 개수
-  const [nickname1, setnickname] = useState();
-  const [username1, setusername] = useState();
+  const [nickname1, setnickname] = useState(nickname);
+  const [username1, setusername] = useState(username);
   const navigate = useNavigate();
-
-  const { username, id, nickname, isBooth, isTf, boothId } = useAppSelector(
-    state => state.user,
-  );
-
-  console.log("로그인 유저", username, id, nickname, isBooth, isTf, boothId);
-  //setnickname(nickname);
 
   const Detail = id => {
     navigate(`/category/detail/${id}`);
