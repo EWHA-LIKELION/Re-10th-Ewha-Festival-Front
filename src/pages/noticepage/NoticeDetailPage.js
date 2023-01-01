@@ -1,10 +1,7 @@
-import React, { useEffect, useState, useNavigate } from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { DeleteNotice, GetNotice } from "../../api/tf";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { setNoticeReducer } from "../../redux/noticeSlice";
-
+import { useAppSelector } from "../../redux/store";
+import styled from "styled-components";
 // components
 import TitleBar from "../../components/TitleBar";
 import Footer from "../../components/Footer/Footer";
@@ -14,23 +11,13 @@ import Modal from "../../components/Modal/Modal";
 import { Pretendard } from "../../components/Text";
 
 export function NoticeDetailPage() {
-  const [notice, setNotice] = useState({});
+  const [notice, setNotice] = useState({
+    id: 1,
+    title: "공지 제목",
+    created_at: "22.09.14 22:10",
+    content: "공지 내용",
+  });
   let { id } = useParams();
-
-  const dispatch = useAppDispatch();
-
-  // 공지 상세 조회 api
-  useEffect(() => {
-    GetNotice(id)
-      .then(res => {
-        console.log("공지 상세 조회 성공", res);
-        setNotice(res.data.data);
-        dispatch(setNoticeReducer(res.data.data));
-      })
-      .catch(err => {
-        console.log("공지 상세 조회 실패", err);
-      });
-  }, []);
 
   // 유저 tf 여부
   const isTf = useAppSelector(state => state.user.isTf);
@@ -50,17 +37,6 @@ export function NoticeDetailPage() {
     setModalOpen(true);
   };
   const closeModal = () => {
-    setModalOpen(false);
-  };
-
-  // 공지 삭제 api
-  const Delete = id => {
-    DeleteNotice(id)
-      .then(res => {
-        console.log(res, "공지 삭제 성공");
-        NoticeMain();
-      })
-      .catch(err => console.log(err, "공지 삭제 실패"));
     setModalOpen(false);
   };
 
@@ -120,7 +96,10 @@ export function NoticeDetailPage() {
           header="공지 삭제"
           subtext="삭제 된 글은 다시 불러올 수 없습니다."
           maintext="공지 글을 삭제하시겠습니까?"
-          onClick={() => Delete(id)}
+          onClick={() => {
+            alert("삭제 완료");
+            closeModal();
+          }}
         ></Modal>
         <Footer />
       </Box>

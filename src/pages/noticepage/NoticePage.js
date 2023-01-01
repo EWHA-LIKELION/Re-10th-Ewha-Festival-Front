@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { GetAllNotice } from "../../api/tf";
 import { useAppSelector } from "../../redux/store";
 
 // components
@@ -15,19 +14,11 @@ import star3 from "../../images/stars/star3.svg";
 import write from "../../images/write.svg";
 
 export function NoticePage() {
-  const [notices, setNotices] = useState([]);
-
-  // 공지 조회 api
-  useEffect(() => {
-    GetAllNotice()
-      .then(res => {
-        console.log("모든 공지 조회 성공", res);
-        setNotices(res.data.data);
-      })
-      .catch(err => {
-        console.log("모든 공지 조회 실패", err);
-      });
-  }, []);
+  const [notices, setNotices] = useState([
+    { id: 1, title: "제목", created_at: "22.09.14 22:10" },
+    { id: 2, title: "제목", created_at: "22.09.14 22:10" },
+    { id: 3, title: "제목", created_at: "22.09.14 22:10" },
+  ]);
 
   // 유저 tf 여부
   const isTf = useAppSelector(state => state.user.isTf);
@@ -83,6 +74,7 @@ export function NoticePage() {
               return (
                 <>
                   <Link
+                    key={notice.id}
                     to={`/notice/${notice.id}`}
                     state={{ notice: notice }}
                     style={{ textDecoration: "none" }}

@@ -1,14 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
-import styled, { createGlobalStyle } from "styled-components";
-import {
-  PyeongChang_Peace,
-  PyeongChang,
-  NanumSquare,
-  Pretendard,
-} from "../../components/Text";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import styled from "styled-components";
+import { PyeongChang_Peace } from "../../components/Text";
+import { useNavigate } from "react-router-dom";
 
 // components
 import Footer from "../../components/Footer/Footer";
@@ -16,12 +9,8 @@ import UploadButton from "../../components/NoticePage/UploadButton";
 import CancelButton from "../../components/NoticePage/CancelButton";
 import Modal from "../../components/Modal/Modal";
 import TitleBar from "../../components/TitleBar";
-import { http } from "../../api/http";
-import TfService from "../../api/services/tfservice";
-import { GetNotice, submitNotice, PatchNotice } from "../../api/tf";
-import { useAppSelector, useAppDispatch } from "../../redux/store";
-import { setPage } from "../../redux/pageSlice";
-import { noticeReducer, setNotice } from "../../redux/noticeSlice";
+
+import { useAppSelector } from "../../redux/store";
 
 const Update = () => {
   const preTitle = useAppSelector(state => state.notice.title);
@@ -48,29 +37,10 @@ const Update = () => {
   const [title, setTitle] = useState(preTitle);
   const [content, setContent] = useState(preContent);
 
-  // 기존 부스 정보 불러오기
-  useEffect(() => {
-    GetNotice(id)
-      .then(res => {
-        console.log("공지 상세 조회 성공", res);
-      })
-      .catch(err => {
-        console.log("공지 상세 조회 실패", err);
-      });
-  }, []);
-
   // 공지사항 수정 요청
   const editNotice = e => {
     e.preventDefault();
-
-    PatchNotice(id, title, content)
-      .then(res => {
-        console.log(res);
-        navigate(`/notice/${id}`);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    navigate("/notice/1");
   };
 
   const handleTitle = e => {

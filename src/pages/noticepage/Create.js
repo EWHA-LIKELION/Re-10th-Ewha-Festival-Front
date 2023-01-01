@@ -1,16 +1,7 @@
-import React, { useEffect, useState } from "react";
-import styled, { createGlobalStyle } from "styled-components";
-import {
-  PyeongChang_Peace,
-  PyeongChang,
-  NanumSquare,
-  Pretendard,
-} from "../../components/Text";
+import React, { useState } from "react";
+import styled from "styled-components";
+import { PyeongChang_Peace } from "../../components/Text";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
-
-// api
-import { initNotice } from "../../redux/noticeSlice"
 
 // components
 import Footer from "../../components/Footer/Footer";
@@ -21,16 +12,7 @@ import TitleBar from "../../components/TitleBar";
 
 import { submitNotice } from "../../api/tf";
 
-// images
-import { Value } from "sass";
-import GrayButton from "../../components/Modal/GrayButton";
-import GreenButton from "../../components/MainPage/GreenButton";
-import { http } from "../../api/http";
-import Axios from "axios";
-// import { text } from "body-parser";
-
 const Create = () => {
-
   // 모달 컴포넌트
   const [modalOpen, setModalOpen] = useState(false);
 
