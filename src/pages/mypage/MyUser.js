@@ -71,7 +71,7 @@ const UserMy = () => {
               {b.thumnail == "" ? (
                 <LikeImg src={booththumnail} />
               ) : (
-                <LikeImg src={b.thumnail} />
+                <LikeImg src={booththumnail} />
               )}
 
               <BootInfo>

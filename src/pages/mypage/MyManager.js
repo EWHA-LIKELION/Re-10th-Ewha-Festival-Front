@@ -93,7 +93,7 @@ const MyManager = () => {
               {b.thumnail == "" ? (
                 <LikeImg src={booththumnail} />
               ) : (
-                <LikeImg src={b.thumnail} />
+                <LikeImg src={booththumnail} />
               )}
               <BootInfo>
                 <p className="num">{b.number}</p>

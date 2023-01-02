@@ -45,9 +45,9 @@ const MenuItem = props => {
   // useState
   const [checked, setChecked] = useState(null);
   const [menus, setMenus] = useState([
-    { id: 1, price: 100, menu: "메뉴 이름" },
-    { id: 2, price: 100, menu: "메뉴 이름" },
-    { id: 3, price: 100, menu: "메뉴 이름" },
+    { id: 1, price: 1000, menu: "메뉴 1" },
+    { id: 2, price: 2000, menu: "메뉴 2" },
+    { id: 3, price: 3000, menu: "메뉴 3" },
   ]);
   const [id, setId] = useState(null);
 
