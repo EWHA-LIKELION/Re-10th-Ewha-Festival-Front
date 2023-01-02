@@ -5,7 +5,10 @@ import PartTitle from "./PartTitle";
 
 const BoothMenu = () => {
   const [thisMenus, setThisMenus] = useState([
-    { is_soldout: false, menu: "와", price: 1000 },
+    { is_soldout: false, menu: "메뉴1", price: 1000 },
+    { is_soldout: false, menu: "메뉴2", price: 2000 },
+    { is_soldout: false, menu: "메뉴3", price: 3000 },
+    { is_soldout: true, menu: "메뉴4", price: 4000 },
   ]);
 
   return (
