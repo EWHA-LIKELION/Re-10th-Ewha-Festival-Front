@@ -242,7 +242,7 @@ const Category = () => {
                 {b.thumnail == "" ? (
                   <BoothImg src={booththumnail} onClick={() => Detail(b.id)} />
                 ) : (
-                  <BoothImg src={b.thumnail} onClick={() => Detail(b.id)} />
+                  <BoothImg src={booththumnail} onClick={() => Detail(b.id)} />
                 )}
                 <BootInfo onClick={event => Detail(b.id)}>
                   <p className="num">{b.number}</p>
